@@ -22,7 +22,8 @@ npm init -y
 npm install --save-dev typescript ts-node
 
 # Initialize TypeScript
-npx tsc --init --moduleResolution node16 --module es2022  --target es2022 --outDir dest
+# npx tsc --init --moduleResolution node16 --module es2022  --target es2022 --outDir dest
+npx tsc --init --moduleResolution node16 --module node16  --target es2022 --outDir dest
 
 # Create src/index.ts
 mkdir src
