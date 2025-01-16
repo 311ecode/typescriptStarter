@@ -6,11 +6,6 @@ newTsp() {
 mkdir "$1"
 cd "$1"
 
-# Initialize git 
-git init
-touch README.md
-touch .gitignore
-
 # Add node_modules to .gitignore
 echo "node_modules" > .gitignore
 echo "dist" >> .gitignore
@@ -23,7 +18,8 @@ npm install --save-dev typescript ts-node
 
 # Initialize TypeScript
 # npx tsc --init --moduleResolution node16 --module es2022  --target es2022 --outDir dest
-npx tsc --init --moduleResolution node16 --module node16  --target es2022 --outDir dest
+# npx tsc --init --moduleResolution node16 --module node16  --target es2022 --outDir dest
+npx tsc --init --moduleResolution nodenext --module nodenext --target es2022 --outDir dest
 
 # Create src/index.ts
 mkdir src
