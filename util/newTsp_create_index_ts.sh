@@ -21,4 +21,45 @@ newTsp_create_index_ts() {
     preset: 'ts-jest',
     testEnvironment: 'node',
   };" > jest.config.js 
+
+  touch README.md
+  echo "# $(basename "\$PWD") 
+
+This is a simple TypeScript project.
+
+## Installation
+
+1. Clone this repository.
+2. Install dependencies using npm:
+   \`\`\`
+   npm install
+   \`\`\`
+
+## Usage
+
+1. To run the project in development mode:
+   \`\`\`
+   npm run dev
+   \`\`\`
+2. To build the project:
+   \`\`\`
+   npm run build
+   \`\`\`
+3. To run the built project:
+   \`\`\`
+   npm run start:build
+   \`\`\`
+4. To run the tests:
+   \`\`\`
+   npm run test
+   \`\`\`
+
+## Contributing
+
+If you would like to contribute to this project, please fork the repository and submit a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for more details.
+" > README.md
 }
