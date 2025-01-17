@@ -14,4 +14,11 @@ newTsp_create_index_ts() {
   test('add function should return the sum of two numbers', () => {
     expect(add(2, 3)).toBe(5);
   });" > test/math.test.ts
+
+  touch jest.config.js
+  echo "/** @type {import('ts-jest').JestConfigWithTsJest} */
+  module.exports = {
+    preset: 'ts-jest',
+    testEnvironment: 'node',
+  };" > jest.config.js 
 }
