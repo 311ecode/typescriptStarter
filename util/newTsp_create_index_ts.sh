@@ -62,4 +62,35 @@ If you would like to contribute to this project, please fork the repository and 
 
 This project is licensed under the MIT License. See the LICENSE file for more details.
 " > README.md
+
+  touch jest.config.js
+  echo "/** @type {import('ts-jest').JestConfigWithTsJest} */
+  module.exports = {
+    preset: 'ts-jest',
+    testEnvironment: 'node',
+    coverageThreshold: {
+      global: {
+        branches: 80,
+        functions: 80,
+        lines: 80,
+        statements: 80,
+      },
+    },
+  };" > jest.config.js 
+  
+  touch jest.config.js
+  echo "/** @type {import('ts-jest').JestConfigWithTsJest} */
+  module.exports = {
+    preset: 'ts-jest',
+    testEnvironment: 'node',
+    coverageThreshold: {
+      global: {
+        branches: 80,
+        functions: 80,
+        lines: 80,
+        statements: 80,
+      },
+    },
+  };" > jest.config.js 
+
 }
