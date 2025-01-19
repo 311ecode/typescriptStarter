@@ -12,5 +12,6 @@ newTsp_add_npm_scripts() {
     "lint:fix": "ts-standard --fix",
     "format": "prettier --write src/**/*.ts",
     "typecheck": "tsc"
+    "watch": "tsc --watch" 
   } | . + { "files": ["dest/src*"] }' package.json > temp.json && mv temp.json package.json
 }
