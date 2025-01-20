@@ -2,7 +2,8 @@
 
 newTsp_add_npm_scripts() {
   jq '.scripts = {
-    "start": "npx ts-node src/index.ts",
+    "tsart": "npx ts-node src/index.ts",
+    "start": "node dist/index.js",
     "test": "npx jest --coverage",
     "test:ci": "npx jest --ci --coverage",
     "build": "npx tsc",
