@@ -15,21 +15,23 @@ newTsp_create_index_ts() {
     expect(add(2, 3)).toBe(5);
   });" > test/math.test.ts
 
-  touch jest.config.mjs
-  echo "/** @type {import('ts-jest').JestConfigWithTsJest} */
+  touch jest.config.js
+  echo "// jest.config.js
+// import type {Config} from 'jest';
+/** @type {import('ts-jest').JestConfigWithTsJest} */
 export default {
-  preset: 'ts-jest',
+  preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'node',
-  transform: {
-      "^.+\\.tsx?$": ["ts-jest", { useESM: true }],
-  },
-  extensionsToTreatAsEsm: ['.ts', '.tsx'],
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  extensionsToTreatAsEsm: ['.ts'], // Only treat .ts files as ESM
+  moduleFileExtensions: ['ts', 'js', 'json', 'node'], // Remove .tsx and .jsx
+  modulePaths: ["../../node_modules/"], // Point to the root node_modules
+  moduleDirectories: ["node_modules", "../../node_modules"],
   testMatch: [
-      "**/test/**/*.ts?(x)",
-      "**/?(*.)+(spec|test).ts?(x)"
+    "**/test/**/*.ts?(x)",
+    "**/?(*.)+(spec|test).ts?(x)"
   ],
-};" > jest.config.mjs 
+  verbose: true,
+};" > jest.config.js 
 
   touch README.md
   echo "# $(basename "\$PWD") 
