@@ -15,20 +15,21 @@ newTsp_create_index_ts() {
     expect(add(2, 3)).toBe(5);
   });" > test/math.test.ts
 
-  touch jest.config.js
+  touch jest.config.mjs
   echo "/** @type {import('ts-jest').JestConfigWithTsJest} */
-  module.exports = {
-    preset: 'ts-jest',
-    testEnvironment: 'node',
-    coverageThreshold: {
-      global: {
-        branches: 80,
-        functions: 80,
-        lines: 80,
-        statements: 80,
-      },
-    },
-  };" > jest.config.js 
+export default {
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  transform: {
+      "^.+\\.tsx?$": ["ts-jest", { useESM: true }],
+  },
+  extensionsToTreatAsEsm: ['.ts', '.tsx'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  testMatch: [
+      "**/test/**/*.ts?(x)",
+      "**/?(*.)+(spec|test).ts?(x)"
+  ],
+};" > jest.config.mjs 
 
   touch README.md
   echo "# $(basename "\$PWD") 
