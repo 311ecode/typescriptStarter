@@ -4,11 +4,11 @@ newTsp_init_npm() {
 
   # Add the lines to package.json
   jq '. + {
-    "main": "dest/src/index.js",
-    "types": "dest/src/index.d.ts",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "type": "module",
     "files": [
-      "dist/src/**"
+      "dist/**"
     ]
   }' package.json > temp.json && mv temp.json package.json
 
