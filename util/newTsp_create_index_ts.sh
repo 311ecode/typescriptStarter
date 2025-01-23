@@ -27,8 +27,8 @@ export default {
   modulePaths: ["../../node_modules/"], // Point to the root node_modules
   moduleDirectories: ["node_modules", "../../node_modules"],
   testMatch: [
-    "**/test/**/*.ts?(x)",
-    "**/?(*.)+(spec|test).ts?(x)"
+    \"**/test/**/*.ts?(x)\",
+    \"**/?(*.)+(spec|test).ts?(x)\"
   ],
   verbose: true,
 };" > jest.config.js 
