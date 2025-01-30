@@ -18,6 +18,7 @@ newTsp_init_npm() {
     "test": "npx jest --coverage",
     "test:ci": "npx jest --ci --coverage",
     "build": "tsup src/index.ts --format esm,cjs --dts --clean --sourcemap",
+    "build:watch": "tsup src/index.ts --format esm,cjs --dts --clean --sourcemap --watch",
     "dev": "tsup src/index.ts --format esm,cjs --watch",
     "start:build": "npm run build && node dest/index.js",
     "dev": "npx ts-node-dev --respawn --transpileOnly src/index.ts",
