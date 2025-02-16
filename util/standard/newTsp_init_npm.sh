@@ -4,14 +4,23 @@ newTsp_init_npm() {
 
   # Add the lines to package.json
   jq '. + {
-    "main": "dist/index.js",
+    "main": "dist/index.cjs",
+    "module": "dist/index.js",
     "types": "dist/index.d.ts",
+    "exports": {
+      ".": {
+        "require": "./dist/index.cjs",
+        "import": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      }
+    },
     "type": "module",
     "files": [
       "dist/**"
     ]
   }' package.json > temp.json && mv temp.json package.json
 
+  # Set the scripts in package.json.  Using a single jq command is more efficient.
   jq '.scripts = {
     "tsart": "npx ts-node src/index.ts",
     "start": "node dist/index.js",
@@ -20,13 +29,10 @@ newTsp_init_npm() {
     "build": "tsup src/index.ts --format esm,cjs --dts --clean --sourcemap",
     "build:watch": "tsup src/index.ts --format esm,cjs --dts --clean --sourcemap --watch",
     "dev": "tsup src/index.ts --format esm,cjs --watch",
-    "start:build": "npm run build && node dest/index.js",
-    "dev": "npx ts-node-dev --respawn --transpileOnly src/index.ts",
     "lint": "ts-standard",
     "lint:fix": "ts-standard --fix",
     "format": "prettier --write src/**/*.ts",
     "typecheck": "tsc",
-    "watch": "tsc --watch" 
+    "watch": "tsc --watch"
   }' package.json > temp.json && mv temp.json package.json
-
 }
