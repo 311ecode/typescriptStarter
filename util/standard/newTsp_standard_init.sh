@@ -10,9 +10,12 @@ newTsp_standard_init() {
   newTsp_init_typescript
   newTsp_create_index_ts
   newTsp_create_gitignore
+  newTsp_create_jest_config
 
   echo "
-  Project initialized successfully!
+  Project initialized successfully at:
   "
+  pwd
+  cd ..
 }
 
