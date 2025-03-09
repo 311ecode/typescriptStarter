@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Test function for newTsp command
+# Updated test function for newTsp command
 #
 
 testNewTsp() {
@@ -37,20 +37,24 @@ testNewTsp() {
   # Verify the project was created correctly
   if [ -d "$test_dir/fuuject" ] && 
      [ -f "$test_dir/fuuject/package.json" ] && 
+     [ -f "$test_dir/fuuject/tsconfig.node.json" ] && 
      [ -f "$test_dir/fuuject/tsconfig.json" ] && 
+     [ -f "$test_dir/fuuject/jest.config.node.js" ] && 
+     [ -f "$test_dir/fuuject/jest.config.js" ] && 
      [ -d "$test_dir/fuuject/src" ] && 
      [ -f "$test_dir/fuuject/src/index.ts" ]; then
     echo "✅ PASSED: fuuject project created successfully with --node flag"
     
-    # Additional checks for package.json content
-    if grep -q '"main": "dist/index.cjs"' "$test_dir/fuuject/package.json" && 
-       grep -q '"build": "tsup src/index.ts' "$test_dir/fuuject/package.json"; then
-      echo "✅ PASSED: package.json configuration is correct"
+    # Check for correct package.json scripts
+    if grep -q '"test": "npm run test:node"' "$test_dir/fuuject/package.json" && 
+       grep -q '"test:node": "npx jest --config jest.config.node.js --coverage"' "$test_dir/fuuject/package.json" && 
+       grep -q '"typecheck": "tsc --project tsconfig.node.json"' "$test_dir/fuuject/package.json"; then
+      echo "✅ PASSED: package.json scripts are correctly configured"
       tests_passed=$((tests_passed + 1))
     else
-      echo "❌ FAILED: package.json does not contain expected configuration"
-      echo "Content of package.json:"
-      cat "$test_dir/fuuject/package.json"
+      echo "❌ FAILED: package.json does not contain expected script configuration"
+      echo "Content of package.json scripts:"
+      jq '.scripts' "$test_dir/fuuject/package.json"
     fi
   else
     echo "❌ FAILED: fuuject project structure is incomplete or incorrect"
@@ -66,8 +70,20 @@ testNewTsp() {
         echo "package.json was not created"
       fi
       
+      if [ ! -f "$test_dir/fuuject/tsconfig.node.json" ]; then
+        echo "tsconfig.node.json was not created"
+      fi
+      
       if [ ! -f "$test_dir/fuuject/tsconfig.json" ]; then
         echo "tsconfig.json was not created"
+      fi
+      
+      if [ ! -f "$test_dir/fuuject/jest.config.node.js" ]; then
+        echo "jest.config.node.js was not created"
+      fi
+      
+      if [ ! -f "$test_dir/fuuject/jest.config.js" ]; then
+        echo "jest.config.js was not created"
       fi
       
       if [ ! -d "$test_dir/fuuject/src" ]; then
@@ -97,6 +113,3 @@ testNewTsp() {
     return 1
   fi
 }
-
-# Note: The following line should be commented out when sourcing this file
-# testNewTsp
