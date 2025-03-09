@@ -1,32 +1,33 @@
 #!/bin/bash
+
 testNewTspCombined() {
   echo "🎉 Combo test extravaganza! Node + Frontend = Epic! 🚀"
-  
+
   # Mark our spot 📍
   local initial_dir=$(pwd)
-  
+
   # Temp test arena incoming! 🏟️
   local test_dir=$(mktemp -d -t newTsp-combo-test-XXXXXXXXXX)
-  
+
   # Cleanup crew ready! 🧼
   trap 'rm -rf "$test_dir"; cd "$initial_dir"' EXIT
-  
+
   # Test scorekeepers on duty! 📊
   local tests_run=0
   local tests_passed=0
-  
+
   # Test Case 3: Combined Project Creation with both flags! 🎯
   echo "🎮 Test Case 3: Building a mega-project with --node AND --frontend! 💪"
   tests_run=$((tests_run + 1))
-  
+
   cd "$test_dir" # Jump into the action! 🏃‍♀️
-  
+
   echo "🔨 Executing: newTsp my-combined-project --node --frontend"
   newTsp my-combined-project --node --frontend
-  
+
   echo "👀 What’s in the combo box? $test_dir:"
   ls -la "$test_dir"
-  
+
   # Did we hit the jackpot? 🎰
   if [ -d "$test_dir/my-combined-project" ] && 
      [ -f "$test_dir/my-combined-project/package.json" ] && 
@@ -39,24 +40,38 @@ testNewTspCombined() {
      [ -d "$test_dir/my-combined-project/public" ] && 
      [ -f "$test_dir/my-combined-project/public/index.html" ]; then
     echo "✅ Jackpot! my-combined-project is a double-threat WINNER! 🎉"
-    
-    # Scripts check—double the fun! 🎷
-    if grep -q '"build:frontend"' "$test_dir/my-combined-project/package.json" && 
-       grep -q '"build:backend"' "$test_dir/my-combined-project/package.json" && 
-       grep -q '"test:frontend"' "$test_dir/my-combined-project/package.json" && 
-       grep -q '"test:backend"' "$test_dir/my-combined-project/package.json"; then
-      echo "🎸 Scripts are a double-hit combo! ✅"
-      tests_passed=$((tests_passed + 1))
+
+    # Check if concurrently is installed and scripts are set
+    cd "$test_dir/my-combined-project"
+    if npm list concurrently --depth=0 > /dev/null 2>&1 && 
+       grep -q '"test": "concurrently' package.json && 
+       grep -q '"build:frontend"' package.json && 
+       grep -q '"build:backend"' package.json && 
+       grep -q '"test:frontend"' package.json && 
+       grep -q '"test:backend"' package.json; then
+      echo "🎸 Scripts and concurrently are a double-hit combo! ✅"
+
+      # Run the combined test script and check output
+      test_output=$(npm run test)
+      if echo "$test_output" | grep -q "Hello World!" && 
+         echo "$test_output" | grep -q "Frontend tests are coming soon! Stay tuned!"; then
+        echo "🎉 Combined test ran successfully with both backend and frontend output! ✅"
+        tests_passed=$((tests_passed + 1))
+      else
+        echo "❌ Combined test ran but output was unexpected!"
+        echo "$test_output"
+      fi
     else
-      echo "❌ Doh! Scripts dropped the ball on this combo! 😩"
+      echo "❌ Doh! Scripts or concurrently dropped the ball on this combo! 😩"
       echo "Here’s the script rundown:"
-      jq '.scripts' "$test_dir/my-combined-project/package.json"
+      jq '.scripts' package.json
     fi
+    cd "$test_dir"
   else
     echo "❌ Ouch! my-combined-project didn’t combo right! 😵"
     echo "Let’s see the damage:"
     ls -la "$test_dir/my-combined-project"
-    
+
     # Combo-breaker diagnostics! 🕵️‍♀️
     if [ ! -d "$test_dir/my-combined-project" ]; then echo "🏚️ Project dir ‘my-combined-project’ didn’t land!"; fi
     if [ -d "$test_dir/my-combined-project" ]; then
@@ -71,12 +86,12 @@ testNewTspCombined() {
       [ -d "$test_dir/my-combined-project/public" ] && [ ! -f "$test_dir/my-combined-project/public/index.html" ] && echo "🌐 index.html didn’t combo!"
     fi
   fi
-  
+
   # Final score! 🏅
   echo ""
   echo "🎲 Tests run: $tests_run"
   echo "🥇 Tests passed: $tests_passed"
-  
+
   if [ "$tests_passed" -eq "$tests_run" ]; then
     echo "🎉 Combo tests are a SMASH HIT! Victory dance! 💃🕺"
     cd "$initial_dir"
@@ -87,4 +102,3 @@ testNewTspCombined() {
     return 1
   fi
 }
-
