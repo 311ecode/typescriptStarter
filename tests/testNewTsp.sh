@@ -9,6 +9,15 @@ testNewTsp() {
   
   # Party lights on! 🎈
   echo ""
+  echo "🧩 Parser party is HERE! Let's decode those args! 🎲"
+  echo "---------------------------------------------"
+  testNewTspParseArgs
+  parse_result=$?
+  total_tests=$((total_tests + 1))
+  [ $parse_result -eq 0 ] && total_passed=$((total_passed + 1))
+  echo "---------------------------------------------"
+  
+  echo ""
   echo "🌍 Calling the Node.js backend test crew! 🐢💻"
   echo "---------------------------------------------"
   testNewTspNode
@@ -49,10 +58,10 @@ testNewTsp() {
     echo "😿 Oh no! Some tests tripped over their shoelaces! 😅"
     echo "🔧 Time to debug—don’t worry, we’ll get ‘em next time! 💪"
     echo "Here’s the scoop:"
+    [ $parse_result -ne 0 ] && echo "  ❌ Parser tests couldn’t crack the code!"
     [ $node_result -ne 0 ] && echo "  ❌ Node tests said ‘nope!’"
     [ $frontend_result -ne 0 ] && echo "  ❌ Frontend tests took a tumble!"
     [ $combined_result -ne 0 ] && echo "  ❌ Combo tests didn’t combo!"
     return 1
   fi
 }
-
