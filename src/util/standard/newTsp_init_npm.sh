@@ -1,38 +1,20 @@
 newTsp_init_npm() {
+  local project_name="$1"
+  
   npm init -y
-
-  # Add the lines to package.json
-  jq '. + {
-    "main": "dist/index.cjs",
-    "module": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "exports": {
-      ".": {
-        "require": "./dist/index.cjs",
-        "import": "./dist/index.js",
-        "types": "./dist/index.d.ts"
-      }
-    },
-    "type": "module",
-    "files": [
-      "dist/**"
-    ]
-  }' package.json > temp.json && mv temp.json package.json
-
-  # Set the scripts in package.json with updated test commands
-  jq '.scripts = {
-    "tsart": "npx ts-node src/index.ts",
-    "start": "node dist/index.js",
-    "test": "npm run test:node",
-    "test:node": "npx jest --config jest.config.node.js --coverage",
-    "test:ci": "npx jest --ci --config jest.config.node.js --coverage",
-    "build": "tsup src/index.ts --format esm,cjs --dts --clean --sourcemap",
-    "build:watch": "tsup src/index.ts --format esm,cjs --dts --clean --sourcemap --watch",
-    "dev": "tsup src/index.ts --format esm,cjs --watch",
+  
+  # Update package name
+  jq --arg name "$project_name" '.name = $name' package.json > temp.json && mv temp.json package.json
+  
+  # Add basic shared scripts
+  jq '.scripts += {
     "lint": "ts-standard",
     "lint:fix": "ts-standard --fix",
-    "format": "prettier --write src/**/*.ts",
-    "typecheck": "tsc --project tsconfig.node.json",
-    "watch": "tsc --project tsconfig.node.json --watch"
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\""
+  }' package.json > temp.json && mv temp.json package.json
+  
+  # Set module type to ES Modules
+  jq '. += {
+    "type": "module"
   }' package.json > temp.json && mv temp.json package.json
 }
