@@ -2,55 +2,51 @@
 testNewTspFrontend() {
   echo "🌟 Frontend test party is ON! Let’s get flashy! 😍"
   
-  # Where we at? 📍
   local initial_dir=$(pwd)
-  
-  # Pop-up a temp test stage 🎭
   local test_dir=$(mktemp -d -t newTsp-frontend-test-XXXXXXXXXX)
-  
-  # Clean-up crew on standby 🧹
   trap 'rm -rf "$test_dir"; cd "$initial_dir"' EXIT
   
-  # Test tally time! 🧮
   local tests_run=0
   local tests_passed=0
   
-  # Test Case 2: Frontend Project Creation with --frontend flag 🎨
-  echo "🎬 Test Case 2: Crafting a frontend masterpiece with --frontend! 🌐"
+  echo "🎬 Test Case 1: Crafting a frontend masterpiece with --frontend! 🌐"
   tests_run=$((tests_run + 1))
   
-  cd "$test_dir" # Slide into the test zone! 🏄‍♂️
-  
+  cd "$test_dir"
   echo "🎨 Executing: newTsp my-frontend-project --frontend"
   newTsp my-frontend-project --frontend
   
   echo "👀 What’s cookin’ in $test_dir?"
   ls -la "$test_dir"
   
-  # Did we paint the town red? 🖌️
   if [ -d "$test_dir/my-frontend-project" ] && 
      [ -f "$test_dir/my-frontend-project/package.json" ] && 
      [ -f "$test_dir/my-frontend-project/tsconfig.frontend.json" ] && 
+     [ -f "$test_dir/my-frontend-project/tsconfig.server.json" ] && 
+     [ -f "$test_dir/my-frontend-project/jest.config.frontend.js" ] && 
+     [ -f "$test_dir/my-frontend-project/jest.e2e.config.js" ] && 
+     [ ! -f "$test_dir/my-frontend-project/jest.config.js" ] && 
      [ -d "$test_dir/my-frontend-project/src/frontend" ] && 
      [ -f "$test_dir/my-frontend-project/src/frontend/index.ts" ] && 
      [ -d "$test_dir/my-frontend-project/public" ] && 
      [ -f "$test_dir/my-frontend-project/public/index.html" ]; then
     echo "✅ Huzzah! my-frontend-project is a beauty with --frontend! 🎉"
     
-    # Are the scripts dazzling? ✨
-    if grep -q '"build:frontend"' "$test_dir/my-frontend-project/package.json" && 
-       grep -q '"serve"' "$test_dir/my-frontend-project/package.json" && 
-       grep -q '"test:frontend"' "$test_dir/my-frontend-project/package.json"; then
-      echo "🎤 Scripts are droppin’ the mic! ✅"
+    cd "$test_dir/my-frontend-project"
+    if grep -q '"build:frontend"' package.json && 
+       grep -q '"serve"' package.json && 
+       grep -q '"test:frontend"' package.json && 
+       grep -q '"test:e2e"' package.json && 
+       grep -q '"test": "concurrently' package.json && 
+       npm list puppeteer --depth=0 > /dev/null 2>&1; then
+      echo "🎤 Scripts and Puppeteer are droppin’ the mic! ✅"
       tests_passed=$((tests_passed + 1))
     else
-      echo "❌ Yikes! Scripts forgot their lines! 😱"
-      echo "Check the script list:"
-      jq '.scripts' "$test_dir/my-frontend-project/package.json"
+      echo "❌ Yikes! Scripts or Puppeteer forgot their lines! 😱"
+      jq '.scripts' package.json
     fi
   else
     echo "❌ Oh snap! my-frontend-project is a hot mess! 😵"
-    echo "Let’s peek inside:"
     ls -la "$test_dir/my-frontend-project"
     
     # Detective mode: what’s missing? 🔍

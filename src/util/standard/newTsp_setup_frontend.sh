@@ -1,12 +1,10 @@
 #!/bin/bash
 newTsp_setup_frontend() {
   echo "Setting up frontend..."
-  
-  # Install frontend-specific dependencies
+
   npm install --save-dev parcel @parcel/transformer-typescript-tsc http-server \
-                       @types/jquery @testing-library/dom jsdom
-  
-  # Configure TypeScript for frontend
+                       @types/jquery @testing-library/dom jsdom puppeteer
+
   cat > tsconfig.frontend.json << EOF
 {
   "compilerOptions": {
@@ -49,7 +47,7 @@ EOF
 }
 EOF
 
-  # Create Jest configuration for frontend
+  # Create Jest configuration for frontend unit tests
   cat << EOF > jest.config.frontend.js
 // jest.config.frontend.js
 /** @type {import('ts-jest').JestConfigWithTsJest} */
@@ -68,7 +66,7 @@ export default {
 };
 EOF
 
-  # Create E2E test configuration
+  # Create E2E test configuration with Puppeteer
   cat << EOF > jest.e2e.config.js
 // jest.e2e.config.js
 /** @type {import('ts-jest').JestConfigWithTsJest} */
@@ -84,7 +82,7 @@ export default {
   ],
   verbose: true,
   transform: {
-    '^.+\\.ts(x?)$': [
+    '^.+\.ts(x?)$': [
       'ts-jest',
       {
         useESM: true,
@@ -92,52 +90,13 @@ export default {
       },
     ],
   },
+  globalSetup: '<rootDir>/test/e2e/setup.ts',
 };
 EOF
 
-  # Create basic Jest config if it doesn't exist
-  if [ ! -f "jest.config.js" ]; then
-    cat << EOF > jest.config.js
-// jest.config.js
-import frontendConfig from './jest.config.frontend.js';
-
-export default {
-  ...frontendConfig,
-  // Add any overrides for the base config here
-};
-EOF
-  else
-    # Update the Jest config to include the frontend config
-    cat << EOF > jest.config.js.new
-// jest.config.js
-import frontendConfig from './jest.config.frontend.js';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-
-// Import existing config if it exists
-let existingConfig = {};
-try {
-  existingConfig = require('./jest.config.js');
-} catch (e) {
-  // No existing config, that's OK
-}
-
-export default {
-  ...frontendConfig,
-  ...existingConfig,
-  // Ensure we can run both frontend and backend tests if needed
-  projects: [
-    ...(existingConfig.projects || []),
-    '<rootDir>/jest.config.frontend.js',
-  ],
-};
-EOF
-    mv jest.config.js.new jest.config.js
-  fi
-  
   # Create frontend directory structure
-  mkdir -p src/frontend src/frontend/components public
-  
+  mkdir -p src/frontend src/frontend/components public test/e2e
+
   # Create index.html in public
   cat > public/index.html << EOF
 <!DOCTYPE html>
@@ -154,14 +113,12 @@ EOF
 </html>
 EOF
 
-  # Create main frontend index.ts file
+  # Create main frontend file
   touch src/frontend/index.ts
   echo 'import "./styles.css";
 
-// DOM Element references
 const appElement = document.getElementById("app");
 
-// Initialize app
 if (appElement) {
   appElement.innerHTML = `
     <div class="container">
@@ -172,7 +129,6 @@ if (appElement) {
     </div>
   `;
 
-  // Add event listener
   const btnElement = document.getElementById("clickBtn");
   const countElement = document.getElementById("clickCount");
   let count = 0;
@@ -185,7 +141,6 @@ if (appElement) {
   }
 }
 
-// Export something to make this a module
 export const appName = "TypeScript Frontend";
 ' > src/frontend/index.ts
 
@@ -260,8 +215,8 @@ button:hover {
 
   # Create tests for frontend
   mkdir -p test/frontend test/e2e
-  
-  # Create a frontend test
+
+  # Create a frontend unit test
   touch test/frontend/Counter.test.ts
   echo 'import { Counter } from "../../src/frontend/components/Counter";
 
@@ -292,70 +247,63 @@ describe("Counter", () => {
 });
 ' > test/frontend/Counter.test.ts
 
-  # Create a basic e2e test
+  # Create Puppeteer setup file
+  touch test/e2e/setup.ts
+  echo 'import { setup: setupPuppeteer } from "jest-environment-puppeteer";
+
+export default async () => {
+  await setupPuppeteer();
+};
+' > test/e2e/setup.ts
+
+  # Create enhanced E2E test
   touch test/e2e/app.e2e.test.ts
-  echo 'describe("Frontend App", () => {
-  it("should be testable with e2e tests", () => {
-    expect(true).toBe(true);
+  echo 'describe("Frontend App E2E", () => {
+  beforeAll(async () => {
+    await page.goto("http://localhost:8080");
+  });
+
+  it("should display the initial page", async () => {
+    const title = await page.$eval("h1", (el) => el.textContent);
+    expect(title).toBe("TypeScript Frontend");
+  });
+
+  it("should increment count on button click", async () => {
+    const initialCount = await page.$eval("#clickCount", (el) => el.textContent);
+    expect(initialCount).toBe("Button clicked 0 times");
+
+    await page.click("#clickBtn");
+    await page.waitForTimeout(100); // Wait for DOM update
+
+    const newCount = await page.$eval("#clickCount", (el) => el.textContent);
+    expect(newCount).toBe("Button clicked 1 times");
   });
 });
 ' > test/e2e/app.e2e.test.ts
 
-  # Create scripts directory if it doesn't exist
+  # Create scripts directory
   mkdir -p scripts
-  
-  # Create a script to expose the frontend using http-server
+
+  # Create script to expose frontend
   cat > scripts/startExposeFrontend.sh << EOF
 #!/bin/bash
 npx http-server public -p 8080 -c-1
 EOF
   chmod +x scripts/startExposeFrontend.sh
 
-  # Add frontend specific scripts to package.json
-# Add frontend specific scripts to package.json
-jq '.scripts += {
-  "start:frontend": "parcel src/frontend/index.ts --dist-dir public",
-  "build:frontend": "parcel build src/frontend/index.ts --dist-dir public --no-cache",
-  "build:frontend:watch": "parcel watch src/frontend/index.ts --dist-dir public",
-  "serve": "http-server public -p 8080 -c-1",
-  "dev:frontend": "parcel src/frontend/index.ts --dist-dir public",
-  "test:frontend": "echo \"Frontend tests are coming soon! Stay tuned! 😊\" && exit 0",
-  "test:e2e": "jest --config jest.e2e.config.js",
-  "typecheck:frontend": "tsc --project tsconfig.frontend.json"
-}' package.json > temp.json && mv temp.json package.json
-  
-  # Add combined test script if it doesn't exist
-  if ! jq -e '.scripts.test' package.json > /dev/null 2>&1; then
-    jq '.scripts += {
-      "test": "npm run test:frontend"
-    }' package.json > temp.json && mv temp.json package.json
-  else
-    # Update test script to include frontend tests
-    existing_test=$(jq -r '.scripts.test' package.json)
-    if [[ "$existing_test" != *"test:frontend"* ]]; then
-      jq --arg test "$existing_test && npm run test:frontend" '.scripts.test = $test' package.json > temp.json && mv temp.json package.json
-    fi
-  fi
-  
-  # Add combined build script if it doesn't exist
-  if ! jq -e '.scripts.build' package.json > /dev/null 2>&1; then
-    jq '.scripts += {
-      "build": "npm run build:frontend"
-    }' package.json > temp.json && mv temp.json package.json
-  else
-    # Update build script to include frontend build
-    existing_build=$(jq -r '.scripts.build' package.json)
-    if [[ "$existing_build" != *"build:frontend"* ]]; then
-      jq --arg build "$existing_build && npm run build:frontend" '.scripts.build = $build' package.json > temp.json && mv temp.json package.json
-    fi
-  fi
-  
-  # Add start script if it doesn't exist
-  if ! jq -e '.scripts.start' package.json > /dev/null 2>&1; then
-    jq '.scripts += {
-      "start": "npm run build:frontend && npm run serve"
-    }' package.json > temp.json && mv temp.json package.json
-  fi
-  
+  # Merge frontend scripts into package.json
+  jq '.scripts |= .+ {
+    "start:frontend": "parcel src/frontend/index.ts --dist-dir public",
+    "build:frontend": "parcel build src/frontend/index.ts --dist-dir public --no-cache",
+    "build:frontend:watch": "parcel watch src/frontend/index.ts --dist-dir public",
+    "serve": "http-server public -p 8080 -c-1",
+    "dev:frontend": "parcel src/frontend/index.ts --dist-dir public",
+    "test:frontend": "jest --config jest.config.frontend.js",
+    "test:e2e": "jest --config jest.e2e.config.js",
+    "typecheck:frontend": "tsc --project tsconfig.frontend.json",
+    "build": "npm run build:frontend",
+    "start": "npm run build:frontend && npm run serve"
+  }' package.json > temp.json && mv temp.json package.json
+
   echo "Frontend setup completed."
 }

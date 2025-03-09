@@ -1,68 +1,79 @@
 #!/bin/bash
 
+source ./src/util/standard/newTsp_init_npm.sh
+source ./src/util/standard/newTsp_setup_node.sh
+source ./src/util/standard/newTsp_setup_frontend.sh
+source ./src/util/standard/newTsp_setTestScript.sh
 
 newTsp() {
-  IFS=' ' read -r newTsp_project_name newTsp_typezero newTsp_node newTsp_frontend newTsp_help <<< "$(newTsp_parse_args "$@")"
+  local newTsp_project_name=""
+  local newTsp_typezero="false"
+  local newTsp_node="false"
+  local newTsp_frontend="false"
+  local newTsp_help="false"
+
+  # Parse arguments
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --typezero)
+        newTsp_typezero="true"
+        shift
+        ;;
+      --node|-n)
+        newTsp_node="true"
+        shift
+        ;;
+      --frontend|-f)
+        newTsp_frontend="true"
+        shift
+        ;;
+      --help|-h)
+        newTsp_help="true"
+        shift
+        ;;
+      *)
+        if [ -z "$newTsp_project_name" ]; then
+          newTsp_project_name="$1"
+        else
+          echo "Error: Multiple project names provided or unrecognized argument: $1"
+          exit 1
+        fi
+        shift
+        ;;
+    esac
+  done
 
   if [ "$newTsp_help" = "true" ]; then
-    newTsp_help
-    return 0
+    echo "Usage: newTsp <project_name> [--typezero] [--node|-n] [--frontend|-f] [--help|-h]"
+    exit 0
   fi
 
   if [ -z "$newTsp_project_name" ]; then
-    echo "Error: Project name is required"
-    echo "Use 'newTsp --help' for usage information"
-    return 1
+    echo "Error: Project name is required."
+    exit 1
   fi
 
-  if [ "$newTsp_typezero" = "true" ]; then
-    # TypeZero takes precedence
-    newTsp_typezero_init "$newTsp_project_name"
-    return 0
-  fi
-
-  # Create the project directory and initialize common elements
   mkdir -p "$newTsp_project_name"
-  cd "$newTsp_project_name" || exit
+  cd "$newTsp_project_name" || exit 1
 
-  # Initialize npm and install common dependencies
+  # Initialize npm once here
   newTsp_init_npm "$newTsp_project_name"
-  newTsp_install_deps
-  newTsp_create_gitignore
 
-  # If no specific project type was selected, show selection menu
-  if [ "$newTsp_node" = "false" ] && [ "$newTsp_frontend" = "false" ]; then
-    project_type=$(newTsp_select_project_type)
-    case "$project_type" in
-      "node")
-        newTsp_node=true
-        ;;
-      "frontend")
-        newTsp_frontend=true
-        ;;
-      *)
-        echo "$project_type"
-        cd ..
-        return 1
-        ;;
-    esac
-  fi
-
-  # Apply node and/or frontend specific setup based on flags
+  # Apply setups, merging scripts
   if [ "$newTsp_node" = "true" ]; then
     newTsp_setup_node
   fi
-
   if [ "$newTsp_frontend" = "true" ]; then
     newTsp_setup_frontend
   fi
 
-  # Set up the test script based on project types
+  # Finalize test script
   newTsp_setTestScript "$newTsp_node" "$newTsp_frontend"
 
   echo "
   Project initialized successfully at:
   "
   pwd
-  cd ..
+  echo "✨ Happy coding! Time to make something awesome! 🚀"
 }
+
