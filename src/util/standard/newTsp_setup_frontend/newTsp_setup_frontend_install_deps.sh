@@ -2,6 +2,7 @@
 newTsp_setup_frontend_install_deps() {
   echo "Installing frontend dependencies..."
   npm install --save-dev parcel @parcel/transformer-typescript-tsc http-server \
-                       @types/jquery @testing-library/dom jsdom puppeteer
+                       @types/jquery @testing-library/dom jsdom puppeteer \
+                       jest-environment-jsdom
 }
 
