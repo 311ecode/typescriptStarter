@@ -1,7 +1,7 @@
-#!/bin/bash
 newTsp_setup_frontend() {
   echo "Setting up frontend..."
-  newTsp_setup_frontend_install_deps
+  # Skip common dependency installation since it's already done
+  newTsp_setup_frontend_install_deps # Frontend-specific dependencies only
   newTsp_setup_frontend_create_configs
   newTsp_setup_frontend_create_structure
   newTsp_setup_frontend_create_base_files

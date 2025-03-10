@@ -1,7 +1,7 @@
-#!/bin/bash
 newTsp_setup_node() {
   echo "Setting up Node.js backend..."
-  newTsp_setup_node_install_deps
+  # Skip common dependency installation since it's already done
+  newTsp_setup_node_install_deps # Node-specific dependencies only
   newTsp_setup_node_create_configs
   newTsp_setup_node_create_structure
   newTsp_setup_node_create_files
@@ -9,4 +9,3 @@ newTsp_setup_node() {
   newTsp_setup_node_update_package
   echo "Node.js backend setup completed."
 }
-

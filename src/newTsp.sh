@@ -1,10 +1,5 @@
 #!/bin/bash
 
-source ./src/util/standard/newTsp_init_npm.sh
-source ./src/util/standard/newTsp_setup_node.sh
-source ./src/util/standard/newTsp_setup_frontend.sh
-source ./src/util/standard/newTsp_setTestScript.sh
-
 newTsp() {
   local newTsp_project_name=""
   local newTsp_typezero="false"
@@ -56,8 +51,8 @@ newTsp() {
   mkdir -p "$newTsp_project_name"
   cd "$newTsp_project_name" || exit 1
 
-  # Initialize npm once here
-  newTsp_init_npm "$newTsp_project_name"
+  # Initialize common setup
+  newTsp_setup_common "$newTsp_project_name"
 
   # Apply setups, merging scripts
   if [ "$newTsp_node" = "true" ]; then
