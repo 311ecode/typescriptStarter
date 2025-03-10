@@ -9,6 +9,7 @@ newTsp_setup_frontend_create_base_files() {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TypeScript Frontend</title>
+  <link rel="stylesheet" href="./index.css">
 </head>
 <body>
   <div id="app"></div>
