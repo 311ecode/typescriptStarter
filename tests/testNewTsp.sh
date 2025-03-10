@@ -1,6 +1,8 @@
 #!/bin/bash
 
 testNewTsp() {
+  local initial_dir=$(pwd)
+
   echo "🎉 Welcome to the ULTIMATE newTsp TEST EXTRAVAGANZA! 🌟"
   echo "🍿 Grab some popcorn, we’re testing EVERYTHING! 😎"
   
@@ -69,6 +71,8 @@ testNewTsp() {
   echo "🎲 Total tests run: $total_tests"
   echo "🏅 Total tests passed: $total_passed"
 
+  cd "$initial_dir"
+
   if [ "$total_passed" -eq "$total_tests" ]; then
     echo "🌈 WOOHOO! All tests are ROCKSTARS! Party time! 🎉🎸"
     echo "🎵 Cue the victory music! 🕺💃"
@@ -122,5 +126,6 @@ testNewTsp() {
     
     return 1
   fi
+
 }
 
