@@ -1,11 +1,27 @@
+#!/bin/bash
 newTsp_init_typescript() {
-  npx tsc --init --moduleResolution bundler --module ES2015 --target es2022 --outDir dest \
-          --strict false --declaration 
+  echo "Initializing TypeScript configuration..."
   
-  # Rename the generated tsconfig.json to tsconfig.node.json
-  mv tsconfig.json tsconfig.node.json
+  # Create tsconfig.node.json directly without using tsc --init which can fail
+  cat > tsconfig.node.json << EOF
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "ES2015",
+    "moduleResolution": "bundler",
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "skipLibCheck": true,
+    "declaration": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.test.ts"]
+}
+EOF
   
-  # Create a base tsconfig.json that extends the node config
+  # Create base tsconfig.json that extends node config
   cat > tsconfig.json << EOF
 {
   "extends": "./tsconfig.node.json",
@@ -16,4 +32,11 @@ newTsp_init_typescript() {
   "exclude": ["node_modules", "**/*.test.ts"]
 }
 EOF
+
+  # Verify config files were created
+  if [ -f "tsconfig.node.json" ] && [ -f "tsconfig.json" ]; then
+    echo "  ✅ TypeScript configuration created successfully."
+  else
+    echo "  ❌ Failed to create TypeScript configuration files."
+  fi
 }

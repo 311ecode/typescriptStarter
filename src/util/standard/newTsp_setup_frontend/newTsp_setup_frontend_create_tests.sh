@@ -2,6 +2,10 @@
 newTsp_setup_frontend_create_tests() {
   echo "Creating test files..."
   
+  # Ensure the test directories exist first
+  mkdir -p test/frontend
+  mkdir -p test/e2e
+  
   echo 'import { Counter } from "../../src/frontend/components/Counter";
 
 describe("Counter", () => {
@@ -31,7 +35,7 @@ describe("Counter", () => {
 });
 ' > test/frontend/Counter.test.ts
 
-  echo 'import { setup: setupPuppeteer } from "jest-environment-puppeteer";
+  echo 'import { setup as setupPuppeteer } from "jest-environment-puppeteer";
 
 export default async () => {
   await setupPuppeteer();
@@ -60,5 +64,11 @@ export default async () => {
   });
 });
 ' > test/e2e/app.e2e.test.ts
-}
 
+  # Verify files were created
+  if [ -f "test/frontend/Counter.test.ts" ] && [ -f "test/e2e/app.e2e.test.ts" ]; then
+    echo "  ✅ Test files created successfully."
+  else
+    echo "  ❌ Failed to create test files."
+  fi
+}

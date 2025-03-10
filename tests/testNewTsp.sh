@@ -44,6 +44,24 @@ testNewTsp() {
   [ $combined_result -eq 0 ] && total_passed=$((total_passed + 1))
   echo "---------------------------------------------"
   
+  echo ""
+  echo "📦 Package name test extravaganza! Let's check those names! 🏷️"
+  echo "---------------------------------------------"
+  testNewTspPackageName
+  package_name_result=$?
+  total_tests=$((total_tests + 1))
+  [ $package_name_result -eq 0 ] && total_passed=$((total_passed + 1))
+  echo "---------------------------------------------"
+
+  echo ""
+  echo "🏗️ Directory structure test marathon! Everything in its right place! 📂"
+  echo "---------------------------------------------"
+  testNewTspDirectoryStructure
+  directory_structure_result=$?
+  total_tests=$((total_tests + 1))
+  [ $directory_structure_result -eq 0 ] && total_passed=$((total_passed + 1))
+  echo "---------------------------------------------"
+
   # Grand finale! 🎤
   echo ""
   echo "🎷 Testapalooza wrap-up time! Let’s see the stats! 📊"
