@@ -8,5 +8,6 @@ newTsp_setup_frontend() {
   newTsp_setup_frontend_create_components
   newTsp_setup_frontend_create_tests
   newTsp_setup_frontend_create_scripts
+  newTsp_remove_main_from_packagejson package.json
   echo "Frontend setup completed."
 }

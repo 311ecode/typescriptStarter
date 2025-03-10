@@ -1,4 +1,5 @@
 #!/bin/bash
+
 testNewTspFrontend_testCase1() {
   local test_dir=$1
   
@@ -32,7 +33,16 @@ testNewTspFrontend_testCase1() {
        grep -q '"test": "concurrently' package.json && 
        npm list puppeteer --depth=0 > /dev/null 2>&1; then
       echo "🎤 Scripts and Puppeteer are droppin' the mic! ✅"
-      return 0
+      
+      # Check for the absence of the "main" key
+      if jq 'has("main")' package.json | grep -q 'true'; then
+        echo "❌ Yikes! package.json has a 'main' key, which is unexpected! 😱"
+        jq '.main' package.json
+        return 1
+      else
+        echo "✅ 'main' key is correctly absent. Bravo! 👏"
+        return 0
+      fi
     else
       echo "❌ Yikes! Scripts or Puppeteer forgot their lines! 😱"
       jq '.scripts' package.json
@@ -55,4 +65,3 @@ testNewTspFrontend_testCase1() {
     return 1
   fi
 }
-
