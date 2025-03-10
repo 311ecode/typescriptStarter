@@ -1,5 +1,4 @@
 #!/bin/bash
-
 testNewTspFrontend_testCase1() {
   local test_dir=$1
   
@@ -65,3 +64,4 @@ testNewTspFrontend_testCase1() {
     return 1
   fi
 }
+

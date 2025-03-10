@@ -38,7 +38,16 @@ testNewTspCombined_testCase1() {
        grep -q '"build:frontend"' package.json && 
        grep -q '"build:backend"' package.json; then
       echo "🎸 Scripts and concurrently are a triple-hit combo! ✅"
-      return 0
+      
+      # Check for the absence of the "main" key
+      if jq 'has("main")' package.json | grep -q 'true'; then
+        echo "❌ Yikes! package.json has a 'main' key, which is unexpected! 😱"
+        jq '.main' package.json
+        return 1
+      else
+        echo "✅ 'main' key is correctly absent. Bravo! 👏"
+        return 0
+      fi
     else
       echo "❌ Doh! Scripts or dependencies dropped the ball! 😩"
       jq '.scripts' package.json
