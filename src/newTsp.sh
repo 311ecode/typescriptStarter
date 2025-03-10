@@ -38,14 +38,17 @@ newTsp() {
     esac
   done
 
+  # Check for help flag FIRST and exit immediately if present
   if [ "$newTsp_help" = "true" ]; then
-    echo "Usage: newTsp <project_name> [--typezero] [--node|-n] [--frontend|-f] [--help|-h]"
-    exit 0
+    # Call the detailed help function instead of just showing usage
+    newTsp_help
+    return 0  # Use return instead of exit when in a function
   fi
 
   if [ -z "$newTsp_project_name" ]; then
     echo "Error: Project name is required."
-    exit 1
+    echo "Run 'newTsp --help' for usage information."
+    return 1  # Use return instead of exit when in a function
   fi
 
   echo "Creating project: $newTsp_project_name"
@@ -62,7 +65,7 @@ newTsp() {
   # Change to project directory
   cd "$safe_dir_name" || {
     echo "Error: Failed to navigate to $safe_dir_name directory"
-    exit 1
+    return 1  # Use return instead of exit when in a function
   }
   
   echo "Project directory: $(pwd)"

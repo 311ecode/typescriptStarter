@@ -4,6 +4,9 @@ testNewTspNode() {
   
   local initial_dir=$(pwd)
   local test_dir=$(mktemp -d -t newTsp-node-test-XXXXXXXXXX)
+  local test_result=0
+  
+  # Setup trap that will ALWAYS run on function exit regardless of return path
   trap 'rm -rf "$test_dir"; cd "$initial_dir"' EXIT
   
   local tests_run=0
@@ -82,11 +85,12 @@ testNewTspNode() {
   
   if [ "$tests_passed" -eq "$tests_run" ]; then
     echo "🎉 All Node tests crushed it! High five! ✋"
-    cd "$initial_dir"
-    return 0
+    test_result=0
   else
     echo "😵 Some Node tests flopped! Time to debug! 🔧"
-    cd "$initial_dir"
-    return 1
+    test_result=1
   fi
+  
+  # Don't need explicit cd here - trap will handle it
+  return $test_result
 }

@@ -151,6 +151,48 @@ testNewTspParseArgs() {
     echo "    Got:      $result"
     all_tests_passed=false
   fi
+
+    # Test case 11: Project name with -nf flag (combined shorthand)
+  echo "🎯 Test 11: Project name + -nf combined flag, double trouble!"
+  result=$(newTsp_parse_args "my-project" "-nf")
+  expected="my-project false true true false"
+  
+  if [[ "$result" == "$expected" ]]; then
+    echo "  🌟 Test 11 is a PERFECT COMBO! 🤜🤛"
+  else
+    echo "  💥 Test 11 fumbled the combo! Oof!"
+    echo "    Expected: $expected"
+    echo "    Got:      $result"
+    all_tests_passed=false
+  fi
+  
+  # Test case 12: Project name with -fn flag (combined shorthand in different order)
+  echo "🎯 Test 12: Project name + -fn flag, reverse order combo!"
+  result=$(newTsp_parse_args "my-project" "-fn")
+  expected="my-project false true true false"
+  
+  if [[ "$result" == "$expected" ]]; then
+    echo "  🌟 Test 12 mixed it up and won! 🎮"
+  else
+    echo "  💥 Test 12 got the order wrong! Darn!"
+    echo "    Expected: $expected"
+    echo "    Got:      $result"
+    all_tests_passed=false
+  fi
+  
+  # Test case 13: Project name with -nfh flag (all shorthands combined)
+  echo "🎯 Test 13: Project name + -nfh, the ultimate combo!"
+  result=$(newTsp_parse_args "my-project" "-nfh")
+  expected="my-project false true true true"
+  
+  if [[ "$result" == "$expected" ]]; then
+    echo "  🌟 Test 13 got the MEGA COMBO! 🎯🎯🎯"
+  else
+    echo "  💥 Test 13 missed some flags! Oh no!"
+    echo "    Expected: $expected"
+    echo "    Got:      $result"
+    all_tests_passed=false
+  fi
   
   # Clean up and wrap up
   cd "$initial_dir"

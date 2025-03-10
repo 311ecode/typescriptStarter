@@ -20,11 +20,21 @@ newTsp_parse_args() {
         help=true
       fi
     elif [[ "$arg" =~ ^- ]]; then
-      # Handle -flags
-      if [[ "$arg" == "-n" ]]; then
-        node=true
-      elif [[ "$arg" == "-h" ]]; then
+      # Handle combined flags like -nf, -fn, -h, etc.
+      if [[ "$arg" == "-h" ]]; then
         help=true
+      else
+        # Process each character in the flag
+        for (( i=1; i<${#arg}; i++ )); do
+          local flag="${arg:$i:1}"
+          if [[ "$flag" == "n" ]]; then
+            node=true
+          elif [[ "$flag" == "f" ]]; then
+            frontend=true
+          elif [[ "$flag" == "h" ]]; then
+            help=true
+          fi
+        done
       fi
     else
       # Handle project name (non-flag argument)
@@ -35,9 +45,8 @@ newTsp_parse_args() {
   done
 
   # Debugging: Print parsed values
-  echo "Debug: project_name=$project_name, typezero=$typezero, node=$node, help=$help" >&2
+  echo "Debug: project_name=$project_name, typezero=$typezero, node=$node, frontend=$frontend, help=$help" >&2
 
   # Return parsed values
   echo "$project_name" "$typezero" "$node" "$frontend" "$help" 
 }
-

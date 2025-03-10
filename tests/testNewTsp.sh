@@ -1,4 +1,5 @@
 #!/bin/bash
+
 testNewTsp() {
   echo "🎉 Welcome to the ULTIMATE newTsp TEST EXTRAVAGANZA! 🌟"
   echo "🍿 Grab some popcorn, we’re testing EVERYTHING! 😎"
@@ -123,82 +124,3 @@ testNewTsp() {
   fi
 }
 
-#!/bin/bash
-testNewTspDirectoryStructure() {
-  echo "🏗️ Directory structure test marathon! Everything in its right place! 📂"
-  
-  local initial_dir=$(pwd)
-  local test_dir=$(mktemp -d -t newTsp-dir-test-XXXXXXXXXX)
-  trap 'rm -rf "$test_dir"; cd "$initial_dir"' EXIT
-  
-  local tests_run=0
-  local tests_passed=0
-
-  # Test Node.js structure
-  tests_run=$((tests_run + 1))
-  cd "$test_dir"
-  newTsp node-project --node
-  if [ -d "node-project/src/backend" ] &&
-     [ -f "node-project/tsconfig.node.json" ]; then
-    echo "✅ Node structure perfect! 🐢"
-    tests_passed=$((tests_passed + 1))
-  else
-    echo "❌ Node structure missing pieces!"
-  fi
-
-  # Test Frontend structure
-  tests_run=$((tests_run + 1))
-  cd "$test_dir"
-  newTsp frontend-project --frontend
-  if [ -d "frontend-project/public" ] &&
-     [ -f "frontend-project/tsconfig.frontend.json" ]; then
-    echo "✅ Frontend structure flawless! 🎨"
-    tests_passed=$((tests_passed + 1))
-  else
-    echo "❌ Frontend structure incomplete!"
-  fi
-
-  # Results
-  echo "📊 Directory tests: $tests_passed/$tests_run passed!"
-  return $((tests_run - tests_passed))
-}
-
-#!/bin/bash
-testNewTspPackageName() {
-  echo "📦 Package name test extravaganza! Let's check those names! 🏷️"
-  
-  local initial_dir=$(pwd)
-  local test_dir=$(mktemp -d -t newTsp-pkg-test-XXXXXXXXXX)
-  trap 'rm -rf "$test_dir"; cd "$initial_dir"' EXIT
-  
-  local tests_run=0
-  local tests_passed=0
-
-  # # Test 1: Name with special chars and trailing dash
-  # tests_run=$((tests_run + 1))
-  # cd "$test_dir"
-  # newTsp "ugly_name--123!" --node
-  # if [ -d "ugly_name--123" ] && 
-  #    jq -e '.name == "ugly-name-123"' ugly_name--123/package.json >/dev/null; then
-  #   echo "✅ Trailing dash & special chars handled! 🧹"
-  #   tests_passed=$((tests_passed + 1))
-  # else
-  #   echo "❌ Failed to clean ugly name!"
-  # fi
-
-  # Test 2: Uppercase conversion
-  # tests_run=$((tests_run + 1))
-  # cd "$test_dir"
-  # newTsp "MyCOOLProject" --node
-  # if [ -d "MyCOOLProject" ] && 
-  #    jq -e '.name == "mycoolproject"' MyCOOLProject/package.json >/dev/null; then
-  #   echo "✅ Uppercase to lowercase conversion works! ⬇️"
-  #   tests_passed=$((tests_passed + 1))
-  # else
-  #   echo "❌ Uppercase handling failed!"
-  # fi
-
-  # Results
-  echo "📊 Package name tests: $tests_passed/$tests_run passed!"
-  return $((tests_run - tests_passed))
-}
