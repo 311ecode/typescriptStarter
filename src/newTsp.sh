@@ -1,5 +1,4 @@
 #!/bin/bash
-
 newTsp() {
   local newTsp_project_name=""
   local newTsp_typezero="false"
@@ -52,8 +51,8 @@ newTsp() {
   echo "Creating project: $newTsp_project_name"
   echo "Initial directory: $initial_dir"
   
-  # Sanitize directory name without adding trailing dash
-  local safe_dir_name=$(echo "$newTsp_project_name" | tr -c 'a-zA-Z0-9\-_.' '-' | sed 's/-*$//g')
+  # After (add lowercase conversion)
+  local safe_dir_name=$(echo "$newTsp_project_name" | tr '[:upper:]' '[:lower:]' | tr -c 'a-z0-9\-_.' '-' | sed 's/-*$//g')
   
   # Create project directory if it doesn't exist
   if [ ! -d "$safe_dir_name" ]; then

@@ -1,5 +1,4 @@
 #!/bin/bash
-
 newTsp_create_project_dir() {
   local dir_name="$1"
   

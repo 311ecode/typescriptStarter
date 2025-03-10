@@ -1,13 +1,32 @@
 #!/bin/bash
 newTsp_init_typescript() {
-  echo "Initializing TypeScript configuration..."
+  echo "Creating TypeScript configuration files..."
   
-  # Create tsconfig.node.json directly without using tsc --init which can fail
+  # Create tsconfig.node.json as the standalone base config (without circular reference)
   cat > tsconfig.node.json << EOF
 {
   "compilerOptions": {
     "target": "es2022",
-    "module": "ES2015",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "skipLibCheck": true,
+    "declaration": true
+  },
+  "include": ["src/backend/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+}
+EOF
+  
+  # Create the main tsconfig.json (independent, not extending node config)
+  cat > tsconfig.json << EOF
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "ESNext",
     "moduleResolution": "bundler",
     "outDir": "dist",
     "esModuleInterop": true,
@@ -17,26 +36,9 @@ newTsp_init_typescript() {
     "declaration": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.test.ts"]
-}
-EOF
-  
-  # Create base tsconfig.json that extends node config
-  cat > tsconfig.json << EOF
-{
-  "extends": "./tsconfig.node.json",
-  "compilerOptions": {
-    "outDir": "dist"
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.test.ts"]
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }
 EOF
 
-  # Verify config files were created
-  if [ -f "tsconfig.node.json" ] && [ -f "tsconfig.json" ]; then
-    echo "  ✅ TypeScript configuration created successfully."
-  else
-    echo "  ❌ Failed to create TypeScript configuration files."
-  fi
+  echo "TypeScript configuration files created successfully."
 }

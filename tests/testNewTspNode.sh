@@ -28,12 +28,12 @@ testNewTspNode() {
      [ ! -f "$test_dir/fuuject/jest.e2e.config.js" ] && 
      [ -d "$test_dir/fuuject/src/backend" ] && 
      [ -f "$test_dir/fuuject/src/backend/index.ts" ]; then
-    echo "✅ Woohoo! fuuject project is alive and kickin’ with --node! 🎉"
+    echo "✅ Woohoo! fuuject project is alive and kickin' with --node! 🎉"
     
     if grep -q '"test:backend"' "$test_dir/fuuject/package.json" && 
        grep -q '"build:backend"' "$test_dir/fuuject/package.json" && 
        grep -q '"test": "npm run test:backend"' "$test_dir/fuuject/package.json"; then
-      echo "🎸 Scripts are rockin’ the house! ✅"
+      echo "🎸 Scripts are rockin' the house! ✅"
       tests_passed=$((tests_passed + 1))
     else
       echo "❌ Uh-oh! Scripts are missing the beat! 😭"
@@ -44,13 +44,35 @@ testNewTspNode() {
     ls -la "$test_dir/fuuject"
     
     # Sherlock mode: what went wrong? 🕵️‍♂️
-    if [ ! -d "$test_dir/fuuject" ]; then echo "🏚️ Project dir ‘fuuject’ didn’t show up!"; fi
+    if [ ! -d "$test_dir/fuuject" ]; then echo "🏚️ Project dir 'fuuject' didn't show up!"; fi
     if [ -d "$test_dir/fuuject" ]; then
       [ ! -f "$test_dir/fuuject/package.json" ] && echo "📜 package.json is AWOL!"
       [ ! -f "$test_dir/fuuject/tsconfig.node.json" ] && echo "⚙️ tsconfig.node.json ghosted us!"
-      [ ! -d "$test_dir/fuuject/src/backend" ] && echo "📁 src/backend didn’t RSVP!"
+      [ ! -d "$test_dir/fuuject/src/backend" ] && echo "📁 src/backend didn't RSVP!"
       [ -d "$test_dir/fuuject/src/backend" ] && [ ! -f "$test_dir/fuuject/src/backend/index.ts" ] && echo "📝 index.ts ditched the party!"
     fi
+  fi
+  
+  # NEW TEST CASE: Check if npm run test:backend actually works
+  echo "🧪 Test Case 2: Running the actual tests with npm run test:backend! 🏃‍♂️"
+  tests_run=$((tests_run + 1))
+  
+  if [ -d "$test_dir/fuuject" ]; then
+    cd "$test_dir/fuuject"
+    echo "🔍 Running: npm run test:backend"
+    npm run test:backend > test_output.log 2>&1
+    test_exit_code=$?
+    
+    if [ $test_exit_code -eq 0 ]; then
+      echo "✅ Tests passed! The code actually works! 🎯"
+      tests_passed=$((tests_passed + 1))
+    else
+      echo "❌ Tests failed! Something's broken in paradise! 💔"
+      echo "Test output:"
+      cat test_output.log
+    fi
+  else
+    echo "❌ Can't run tests - project directory doesn't exist! 😱"
   fi
   
   # Wrap it up! 📦
@@ -68,4 +90,3 @@ testNewTspNode() {
     return 1
   fi
 }
-
