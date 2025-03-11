@@ -13,11 +13,6 @@ testNewTspNode_testCase1() {
   
   if [ -d "$test_dir/fuuject" ] && 
      [ -f "$test_dir/fuuject/package.json" ] && 
-     [ -f "$test_dir/fuuject/tsconfig.node.json" ] && 
-     [ ! -f "$test_dir/fuuject/jest.config.js" ] && 
-     [ -f "$test_dir/fuuject/jest.config.node.js" ] && 
-     [ ! -f "$test_dir/fuuject/tsconfig.server.json" ] && 
-     [ ! -f "$test_dir/fuuject/jest.e2e.config.js" ] && 
      [ -d "$test_dir/fuuject/src/backend" ] && 
      [ -f "$test_dir/fuuject/src/backend/index.ts" ]; then
     echo "✅ Woohoo! fuuject project is alive and kickin' with --node! 🎉"

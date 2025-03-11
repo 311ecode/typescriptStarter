@@ -8,22 +8,26 @@ newTsp_setup_node_create_tests() {
   
   # Create basic test file for backend index
   cat > test/backend/index.test.ts << EOF
-import { helloWorld } from '../../src/backend/index';
+import { test } from 'node:test';
+import assert from 'node:assert';
+import { helloWorld } from '../../src/backend/index.js';
 
-describe('Backend Index Tests', () => {
-  test('helloWorld constant should be "Hello World!"', () => {
-    expect(helloWorld).toBe('Hello World!');
+test('Backend Index Tests', async (t) => {
+  await t.test('helloWorld constant should be "Hello World!"', () => {
+    assert.strictEqual(helloWorld, 'Hello World!');
   });
 });
 EOF
 
   # Create basic test file for math module
   cat > test/backend/math.test.ts << EOF
-import { add } from '../../src/backend/math';
+import { test } from 'node:test';
+import assert from 'node:assert';
+import { add } from '../../src/backend/math.js';
 
-describe('Math Module Tests', () => {
-  test('add function should return the sum of two numbers', () => {
-    expect(add(2, 3)).toBe(5);
+test('Math Module Tests', async (t) => {
+  await t.test('add function should return the sum of two numbers', () => {
+    assert.strictEqual(add(2, 3), 5);
   });
 });
 EOF

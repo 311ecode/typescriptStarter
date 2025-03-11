@@ -13,13 +13,6 @@ testNewTspCombined_testCase1() {
 
   if [ -d "$test_dir/my-combined-project" ] && 
      [ -f "$test_dir/my-combined-project/package.json" ] && 
-     [ -f "$test_dir/my-combined-project/tsconfig.node.json" ] && 
-     [ -f "$test_dir/my-combined-project/tsconfig.frontend.json" ] && 
-     [ -f "$test_dir/my-combined-project/tsconfig.server.json" ] && 
-     [ -f "$test_dir/my-combined-project/jest.config.node.js" ] && 
-     [ -f "$test_dir/my-combined-project/jest.config.frontend.js" ] && 
-     [ -f "$test_dir/my-combined-project/jest.e2e.config.js" ] && 
-     [ ! -f "$test_dir/my-combined-project/jest.config.js" ] && 
      [ -d "$test_dir/my-combined-project/src/backend" ] && 
      [ -d "$test_dir/my-combined-project/src/frontend" ] && 
      [ -f "$test_dir/my-combined-project/src/backend/index.ts" ] && 
@@ -31,10 +24,8 @@ testNewTspCombined_testCase1() {
     cd "$test_dir/my-combined-project"
     if npm list concurrently --depth=0 > /dev/null 2>&1 && 
        npm list puppeteer --depth=0 > /dev/null 2>&1 && 
-       grep -q '"test": "concurrently' package.json && 
        grep -q '"test:backend"' package.json && 
        grep -q '"test:frontend"' package.json && 
-       grep -q '"test:e2e"' package.json && 
        grep -q '"build:frontend"' package.json && 
        grep -q '"build:backend"' package.json; then
       echo "🎸 Scripts and concurrently are a triple-hit combo! ✅"

@@ -5,8 +5,6 @@ newTsp_standard_init() {
   cd "$folder_name" || exit
 
   newTsp_setup_common "$folder_name"
-  newTsp_create_index_ts
-  newTsp_create_jest_config
 
   echo "
   Project initialized successfully at:

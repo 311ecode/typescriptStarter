@@ -20,12 +20,18 @@ newTsp_init_npm() {
   "name": "'$sanitized_name'",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {},
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+    "files": [
+    "dist/index.js",
+    "dist/index.d.ts",
+    "dist/index.js.map"
+  ]
 }' > package.json
   else
     # Update package.json with jq

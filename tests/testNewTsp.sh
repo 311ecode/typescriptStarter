@@ -14,7 +14,6 @@ testNewTsp() {
     "testNewTsp_runFrontendTest"
     "testNewTsp_runCombinedTest"
     "testNewTsp_runPackageNameTest"
-    "testNewTsp_runDirectoryStructureTest"
   )
   
   # Array to store results

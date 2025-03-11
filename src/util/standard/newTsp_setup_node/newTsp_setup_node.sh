@@ -7,5 +7,6 @@ newTsp_setup_node() {
   newTsp_setup_node_create_files
   newTsp_setup_node_create_tests
   newTsp_setup_node_update_package
+  newTsp_setup_node_create_scripts
   echo "Node.js backend setup completed."
 }

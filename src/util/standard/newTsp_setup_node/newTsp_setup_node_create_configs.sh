@@ -23,22 +23,5 @@ newTsp_setup_node_create_configs() {
 }
 EOF
 
-  cat << EOF > jest.config.node.js
-// jest.config.node.js
-/** @type {import('ts-jest').JestConfigWithTsJest} */
-export default {
-  preset: 'ts-jest/presets/default-esm',
-  testEnvironment: 'node',
-  extensionsToTreatAsEsm: ['.ts'],
-  moduleFileExtensions: ['ts', 'js', 'json', 'node'],
-  modulePaths: ["../../node_modules/"],
-  moduleDirectories: ["node_modules", "../../node_modules"],
-  testMatch: [
-    "**/test/backend/**/*.ts?(x)",
-    "**/test/backend/?(*.)+(spec|test).ts?(x)"
-  ],
-  verbose: true,
-};
-EOF
 }
 

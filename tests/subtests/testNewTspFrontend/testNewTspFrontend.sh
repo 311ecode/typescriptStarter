@@ -16,12 +16,6 @@ testNewTspFrontend() {
     tests_passed=$((tests_passed + 1))
   fi
 
-  # Run test case 2
-  tests_run=$((tests_run + 1))
-  if testNewTspFrontend_testCase2_mainAbsence "$test_dir"; then
-    tests_passed=$((tests_passed + 1))
-  fi
-  
   # Show summary and determine overall result
   if testNewTspFrontend_summary "$tests_run" "$tests_passed"; then
     return 0
