@@ -1,8 +1,8 @@
 #!/bin/bash
 newTsp_setup_frontend_create_base_files() {
   echo "Creating base frontend files..."
-  
-  cat > public/index.html << EOF
+
+  cat >public/index.html <<EOF
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,7 +45,7 @@ if (appElement) {
 }
 
 export const appName = "TypeScript Frontend";
-' > src/frontend/index.ts
+' >src/frontend/index.ts
 
   echo '/* Main styles */
 body {
@@ -85,6 +85,5 @@ button {
 button:hover {
   background-color: #45a049;
 }
-' > src/frontend/styles.css
+' >src/frontend/styles.css
 }
-

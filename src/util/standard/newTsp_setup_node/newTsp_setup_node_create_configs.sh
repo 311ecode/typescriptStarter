@@ -1,9 +1,9 @@
 #!/bin/bash
 newTsp_setup_node_create_configs() {
   echo "Creating configuration files..."
-  
+
   npx tsc --init --moduleResolution bundler --module ES2015 --target es2022 --outDir dist \
-          --strict false --declaration
+    --strict false --declaration
 
   if [ -f "tsconfig.json" ]; then
     mv tsconfig.json tsconfig.node.json
@@ -12,7 +12,7 @@ newTsp_setup_node_create_configs() {
     exit 1
   fi
 
-  cat > tsconfig.json << EOF
+  cat >tsconfig.json <<EOF
 {
   "extends": "./tsconfig.node.json",
   "compilerOptions": {
@@ -24,4 +24,3 @@ newTsp_setup_node_create_configs() {
 EOF
 
 }
-

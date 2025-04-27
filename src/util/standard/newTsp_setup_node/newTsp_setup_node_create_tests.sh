@@ -2,12 +2,12 @@
 
 newTsp_setup_node_create_tests() {
   echo "Creating backend test files..."
-  
+
   # Ensure test directories exist
   mkdir -p test/backend
-  
+
   # Create basic test file for backend index
-  cat > test/backend/index.test.ts << EOF
+  cat >test/backend/index.test.ts <<EOF
 import { test } from 'node:test';
 import assert from 'node:assert';
 import { helloWorld } from '../../src/backend/index.js';
@@ -20,7 +20,7 @@ test('Backend Index Tests', async (t) => {
 EOF
 
   # Create basic test file for math module
-  cat > test/backend/math.test.ts << EOF
+  cat >test/backend/math.test.ts <<EOF
 import { test } from 'node:test';
 import assert from 'node:assert';
 import { add } from '../../src/backend/math.js';

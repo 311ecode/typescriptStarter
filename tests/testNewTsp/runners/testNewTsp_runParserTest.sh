@@ -6,7 +6,6 @@ testNewTsp_runParserTest() {
   testNewTspParseArgs
   local result=$?
   echo "---------------------------------------------"
-  
+
   return $result
 }
-

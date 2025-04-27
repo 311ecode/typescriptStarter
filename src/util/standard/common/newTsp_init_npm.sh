@@ -3,16 +3,16 @@
 newTsp_init_npm() {
   local project_name="$1"
   echo "Initializing npm for $project_name..."
-  
+
   # Debug current directory
   echo "  Current directory for npm init: $(pwd)"
-  
+
   # Sanitize project name for npm (lowercase, replace special chars with hyphens)
   local sanitized_name=$(echo "$project_name" | tr '[:upper:]' '[:lower:]' | tr -c 'a-z0-9\-' '-' | sed 's/-*$//g')
-  
+
   # Initialize npm project
-  npm init -y > /dev/null 2>&1
-  
+  npm init -y >/dev/null 2>&1
+
   # Verify package.json was created
   if [ ! -f "package.json" ]; then
     echo "ERROR: package.json was not created by npm init. Creating manually."
@@ -32,14 +32,14 @@ newTsp_init_npm() {
     "dist/index.d.ts",
     "dist/index.js.map"
   ]
-}' > package.json
+}' >package.json
   else
     # Update package.json with jq
     if command -v jq >/dev/null 2>&1; then
       # Remove trailing dash if present from sanitized name
       sanitized_name=$(echo "$sanitized_name" | sed 's/-*$//g')
-      
-      jq --arg name "$sanitized_name" '.name = $name | .type = "module" | del(.scripts.test)' package.json > temp.json
+
+      jq --arg name "$sanitized_name" '.name = $name | .type = "module" | del(.scripts.test)' package.json >temp.json
       if [ -f "temp.json" ]; then
         mv temp.json package.json
       else
@@ -56,7 +56,7 @@ newTsp_init_npm() {
       fi
     fi
   fi
-  
+
   # Verify the changes
   echo "  Verifying package.json contents:"
   if [ -f "package.json" ]; then

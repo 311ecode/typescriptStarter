@@ -6,7 +6,6 @@ testNewTsp_runCombinedTest() {
   testNewTspCombined
   local result=$?
   echo "---------------------------------------------"
-  
+
   return $result
 }
-

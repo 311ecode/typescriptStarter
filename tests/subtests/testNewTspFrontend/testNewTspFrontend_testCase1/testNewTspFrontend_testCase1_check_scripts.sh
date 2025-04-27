@@ -1,7 +1,7 @@
 #!/bin/bash
 testNewTspFrontend_testCase1_check_scripts() {
   local package_json="$1"
-  local scripts=("build:frontend" "serve" "test:frontend" )
+  local scripts=("build:frontend" "serve" "test:frontend")
   local all_scripts_found=true
 
   for script in "${scripts[@]}"; do
@@ -19,4 +19,3 @@ testNewTspFrontend_testCase1_check_scripts() {
     return 1
   fi
 }
-

@@ -14,20 +14,20 @@ newTsp_select_project_type() {
   read -p "Enter selection (1-3): " selection
 
   case $selection in
-    1)
-      echo "node"
-      ;;
-    2)
-      echo "Error: Frontend project type is not yet implemented"
-      exit 1
-      ;;
-    3)
-      echo "Error: Full-Stack project type is not yet implemented"
-      exit 1
-      ;;
-    *)
-      echo "Invalid selection. Please try again."
-      newTsp_select_project_type
-      ;;
+  1)
+    echo "node"
+    ;;
+  2)
+    echo "Error: Frontend project type is not yet implemented"
+    exit 1
+    ;;
+  3)
+    echo "Error: Full-Stack project type is not yet implemented"
+    exit 1
+    ;;
+  *)
+    echo "Invalid selection. Please try again."
+    newTsp_select_project_type
+    ;;
   esac
 }

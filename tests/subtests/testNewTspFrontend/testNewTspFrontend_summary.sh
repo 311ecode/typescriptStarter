@@ -2,11 +2,11 @@
 testNewTspFrontend_summary() {
   local tests_run=$1
   local tests_passed=$2
-  
+
   echo ""
   echo "🎲 Tests run: $tests_run"
   echo "🥇 Tests passed: $tests_passed"
-  
+
   if [ "$tests_passed" -eq "$tests_run" ]; then
     echo "🌈 Frontend tests are a total win! Party time! 🎉"
     return 0
@@ -15,4 +15,3 @@ testNewTspFrontend_summary() {
     return 1
   fi
 }
-

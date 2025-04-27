@@ -1,7 +1,7 @@
 #!/bin/bash
 newTsp_init_typescript() {
   echo "Creating TypeScript configuration files..."
-  
+
   # # Create tsconfig.node.json as the standalone base config (without circular reference)
   #   cat > tsconfig.node.json << EOF
   # {
@@ -20,9 +20,9 @@ newTsp_init_typescript() {
   #   "exclude": ["node_modules", "dist", "**/*.test.ts"]
   # }
   # EOF
-  
+
   # Create the main tsconfig.json (independent, not extending node config)
-  cat > tsconfig.json << EOF
+  cat >tsconfig.json <<EOF
 {
   "compilerOptions": {
     "target": "es2022",

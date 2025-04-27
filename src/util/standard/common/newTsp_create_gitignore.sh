@@ -160,6 +160,5 @@ node_modules/.prisma
 
 # Cache directory for vite
 
-" > .gitignore
+" >.gitignore
 }
-

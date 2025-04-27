@@ -10,4 +10,3 @@ testNewTspFrontend_testCase1_check_main_absence() {
     return 0
   fi
 }
-

@@ -2,12 +2,12 @@
 newTsp_remove_main_from_packagejson() {
   local package_json_path="$1"
 
-  if [[ -z "$package_json_path" ]]; then
+  if [[ -z $package_json_path ]]; then
     echo "Error: Package.json path not provided."
     return 1
   fi
 
-  if [[ ! -f "$package_json_path" ]]; then
+  if [[ ! -f $package_json_path ]]; then
     echo "Error: Package.json file not found at '$package_json_path'."
     return 1
   fi
@@ -16,7 +16,7 @@ newTsp_remove_main_from_packagejson() {
   if jq 'has("main")' "$package_json_path" | grep -q "true"; then
     # Use jq to remove the "main" key
     local temp_file=$(mktemp)
-    jq 'del(.main)' "$package_json_path" > "$temp_file"
+    jq 'del(.main)' "$package_json_path" >"$temp_file"
 
     if [[ $? -ne 0 ]]; then
       echo "Error: Failed to process package.json with jq."
@@ -34,4 +34,3 @@ newTsp_remove_main_from_packagejson() {
     return 0
   fi
 }
-

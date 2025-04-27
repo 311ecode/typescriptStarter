@@ -1,7 +1,7 @@
 #!/bin/bash
 testNewTsp_reportNodeFailures() {
   local node_result=$1
-  
+
   if [ $node_result -ne 0 ]; then
     echo "  ❌ NODE.JS TEST FAILURES:"
     echo "     - Node.js project setup encountered problems"
@@ -9,4 +9,3 @@ testNewTsp_reportNodeFailures() {
     echo "     - Verify tsconfig.node.json and Jest configuration"
   fi
 }
-

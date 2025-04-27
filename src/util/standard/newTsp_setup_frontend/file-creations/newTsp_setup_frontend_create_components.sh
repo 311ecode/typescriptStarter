@@ -1,7 +1,7 @@
 #!/bin/bash
 newTsp_setup_frontend_create_components() {
   echo "Creating frontend components..."
-  cat <<EOF > src/frontend/components/Counter.ts
+  cat <<EOF >src/frontend/components/Counter.ts
 export class Counter {
   private count = 0;
   private element: HTMLElement;
@@ -27,4 +27,3 @@ export class Counter {
 }
 EOF
 }
-

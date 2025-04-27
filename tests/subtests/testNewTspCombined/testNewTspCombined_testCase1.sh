@@ -1,9 +1,9 @@
 #!/bin/bash
 testNewTspCombined_testCase1() {
   local test_dir=$1
-  
+
   echo "🎮 Test Case 1: Building a mega-project with --node AND --frontend! 💪"
-  
+
   cd "$test_dir"
   echo "🔨 Executing: newTsp my-combined-project --node --frontend"
   newTsp my-combined-project --node --frontend
@@ -11,25 +11,25 @@ testNewTspCombined_testCase1() {
   echo "👀 What's in the combo box? $test_dir:"
   ls -la "$test_dir"
 
-  if [ -d "$test_dir/my-combined-project" ] && 
-     [ -f "$test_dir/my-combined-project/package.json" ] && 
-     [ -d "$test_dir/my-combined-project/src/backend" ] && 
-     [ -d "$test_dir/my-combined-project/src/frontend" ] && 
-     [ -f "$test_dir/my-combined-project/src/backend/index.ts" ] && 
-     [ -f "$test_dir/my-combined-project/src/frontend/index.ts" ] && 
-     [ -d "$test_dir/my-combined-project/public" ] && 
-     [ -f "$test_dir/my-combined-project/public/index.html" ]; then
+  if [ -d "$test_dir/my-combined-project" ] &&
+    [ -f "$test_dir/my-combined-project/package.json" ] &&
+    [ -d "$test_dir/my-combined-project/src/backend" ] &&
+    [ -d "$test_dir/my-combined-project/src/frontend" ] &&
+    [ -f "$test_dir/my-combined-project/src/backend/index.ts" ] &&
+    [ -f "$test_dir/my-combined-project/src/frontend/index.ts" ] &&
+    [ -d "$test_dir/my-combined-project/public" ] &&
+    [ -f "$test_dir/my-combined-project/public/index.html" ]; then
     echo "✅ Jackpot! my-combined-project is a double-threat WINNER! 🎉"
 
     cd "$test_dir/my-combined-project"
-    if npm list concurrently --depth=0 > /dev/null 2>&1 && 
-       npm list puppeteer --depth=0 > /dev/null 2>&1 && 
-       grep -q '"test:backend"' package.json && 
-       grep -q '"test:frontend"' package.json && 
-       grep -q '"build:frontend"' package.json && 
-       grep -q '"build:backend"' package.json; then
+    if npm list concurrently --depth=0 >/dev/null 2>&1 &&
+      npm list puppeteer --depth=0 >/dev/null 2>&1 &&
+      grep -q '"test:backend"' package.json &&
+      grep -q '"test:frontend"' package.json &&
+      grep -q '"build:frontend"' package.json &&
+      grep -q '"build:backend"' package.json; then
       echo "🎸 Scripts and concurrently are a triple-hit combo! ✅"
-      
+
       # Check for the absence of the "main" key
       if jq 'has("main")' package.json | grep -q 'true'; then
         echo "❌ Yikes! package.json has a 'main' key, which is unexpected! 😱"
@@ -64,4 +64,3 @@ testNewTspCombined_testCase1() {
     return 1
   fi
 }
-

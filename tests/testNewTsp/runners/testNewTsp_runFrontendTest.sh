@@ -6,7 +6,6 @@ testNewTsp_runFrontendTest() {
   testNewTspFrontend
   local result=$?
   echo "---------------------------------------------"
-  
+
   return $result
 }
-

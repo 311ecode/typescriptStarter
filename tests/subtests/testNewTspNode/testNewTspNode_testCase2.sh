@@ -1,15 +1,15 @@
 #!/bin/bash
 testNewTspNode_testCase2() {
   local test_dir=$1
-  
+
   echo "🧪 Test Case 2: Running the actual tests with npm run test:backend! 🏃‍♂️"
-  
+
   if [ -d "$test_dir/fuuject" ]; then
     cd "$test_dir/fuuject"
     echo "🔍 Running: npm run test:backend"
-    npm run test:backend > test_output.log 2>&1
+    npm run test:backend >test_output.log 2>&1
     test_exit_code=$?
-    
+
     if [ $test_exit_code -eq 0 ]; then
       echo "✅ Tests passed! The code actually works! 🎯"
       return 0
@@ -24,4 +24,3 @@ testNewTspNode_testCase2() {
     return 1
   fi
 }
-

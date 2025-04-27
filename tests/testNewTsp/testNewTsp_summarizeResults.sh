@@ -9,7 +9,7 @@ testNewTsp_summarizeResults() {
   local combined_result=$7
   local package_name_result=$8
   local directory_structure_result=$9
-  
+
   # Grand finale! 🎤
   echo ""
   echo "🎷 Testapalooza wrap-up time! Let's see the stats! 📊"
@@ -26,15 +26,14 @@ testNewTsp_summarizeResults() {
     echo "😿 Oh no! Some tests tripped over their shoelaces! 😅"
     echo "🔧 Time to debug—don't worry, we'll get 'em next time! 💪"
     echo "Here's the detailed failure report:"
-    
+
     testNewTsp_reportParserFailures $parse_result
     testNewTsp_reportNodeFailures $node_result
     testNewTsp_reportFrontendFailures $frontend_result
     testNewTsp_reportCombinedFailures $combined_result
     testNewTsp_reportPackageNameFailures $package_name_result
     testNewTsp_reportDirectoryStructureFailures $directory_structure_result
-    
+
     return 1
   fi
 }
-

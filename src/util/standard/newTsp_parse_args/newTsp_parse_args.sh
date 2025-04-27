@@ -8,30 +8,30 @@ newTsp_parse_args() {
   local frontend=false
 
   for arg in "${args[@]}"; do
-    if [[ "$arg" =~ ^-- ]]; then
+    if [[ $arg =~ ^-- ]]; then
       # Handle --flags
-      if [[ "$arg" == "--typezero" ]]; then
+      if [[ $arg == "--typezero" ]]; then
         typezero=true
-      elif [[ "$arg" == "--node" ]]; then
+      elif [[ $arg == "--node" ]]; then
         node=true
-      elif [[ "$arg" == "--frontend" ]]; then
+      elif [[ $arg == "--frontend" ]]; then
         frontend=true
-      elif [[ "$arg" == "--help" ]]; then
+      elif [[ $arg == "--help" ]]; then
         help=true
       fi
-    elif [[ "$arg" =~ ^- ]]; then
+    elif [[ $arg =~ ^- ]]; then
       # Handle combined flags like -nf, -fn, -h, etc.
-      if [[ "$arg" == "-h" ]]; then
+      if [[ $arg == "-h" ]]; then
         help=true
       else
         # Process each character in the flag
-        for (( i=1; i<${#arg}; i++ )); do
-          local flag="${arg:$i:1}"
-          if [[ "$flag" == "n" ]]; then
+        for ((i = 1; i < ${#arg}; i++)); do
+          local flag="${arg:i:1}"
+          if [[ $flag == "n" ]]; then
             node=true
-          elif [[ "$flag" == "f" ]]; then
+          elif [[ $flag == "f" ]]; then
             frontend=true
-          elif [[ "$flag" == "h" ]]; then
+          elif [[ $flag == "h" ]]; then
             help=true
           fi
         done
@@ -48,5 +48,5 @@ newTsp_parse_args() {
   echo "Debug: project_name=$project_name, typezero=$typezero, node=$node, frontend=$frontend, help=$help" >&2
 
   # Return parsed values
-  echo "$project_name" "$typezero" "$node" "$frontend" "$help" 
+  echo "$project_name" "$typezero" "$node" "$frontend" "$help"
 }

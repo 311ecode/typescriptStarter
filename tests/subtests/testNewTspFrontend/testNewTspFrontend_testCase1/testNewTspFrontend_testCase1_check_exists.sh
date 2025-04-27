@@ -9,4 +9,3 @@ testNewTspFrontend_testCase1_check_exists() {
     return 1
   fi
 }
-

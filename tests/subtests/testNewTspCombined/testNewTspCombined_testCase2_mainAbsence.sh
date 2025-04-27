@@ -15,4 +15,3 @@ testNewTspCombined_testCase2_mainAbsence() {
     return 0
   fi
 }
-

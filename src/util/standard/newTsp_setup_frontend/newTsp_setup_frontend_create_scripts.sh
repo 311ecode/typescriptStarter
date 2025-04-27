@@ -1,7 +1,7 @@
 #!/bin/bash
 newTsp_setup_frontend_create_scripts() {
   echo "Creating scripts..."
-  cat > scripts/startExposeFrontend.sh << EOF
+  cat >scripts/startExposeFrontend.sh <<EOF
 #!/bin/bash
 npx http-server public -p 8089 -c-1
 EOF
@@ -19,6 +19,5 @@ EOF
     "build": "npm run build:frontend",
     "start": "npm run build:frontend && npm run serve",
     "test": "npm run test:frontend",
-  }' package.json > temp.json && mv temp.json package.json
+  }' package.json >temp.json && mv temp.json package.json
 }
-

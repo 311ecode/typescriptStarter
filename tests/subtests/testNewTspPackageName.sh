@@ -1,11 +1,11 @@
 #!/bin/bash
 testNewTspPackageName() {
   echo "📦 Package name test extravaganza! Let's check those names! 🏷️"
-  
+
   local initial_dir=$(pwd)
   local test_dir=$(mktemp -d -t newTsp-pkg-test-XXXXXXXXXX)
   trap 'rm -rf "$test_dir"; cd "$initial_dir"' EXIT
-  
+
   local tests_run=0
   local tests_passed=0
 
@@ -13,7 +13,7 @@ testNewTspPackageName() {
   # tests_run=$((tests_run + 1))
   # cd "$test_dir"
   # newTsp "ugly_name--123!" --node
-  # if [ -d "ugly_name--123" ] && 
+  # if [ -d "ugly_name--123" ] &&
   #    jq -e '.name == "ugly-name-123"' ugly_name--123/package.json >/dev/null; then
   #   echo "✅ Trailing dash & special chars handled! 🧹"
   #   tests_passed=$((tests_passed + 1))
@@ -25,7 +25,7 @@ testNewTspPackageName() {
   # tests_run=$((tests_run + 1))
   # cd "$test_dir"
   # newTsp "MyCOOLProject" --node
-  # if [ -d "MyCOOLProject" ] && 
+  # if [ -d "MyCOOLProject" ] &&
   #    jq -e '.name == "mycoolproject"' MyCOOLProject/package.json >/dev/null; then
   #   echo "✅ Uppercase to lowercase conversion works! ⬇️"
   #   tests_passed=$((tests_passed + 1))
@@ -37,4 +37,3 @@ testNewTspPackageName() {
   echo "📊 Package name tests: $tests_passed/$tests_run passed!"
   return $((tests_run - tests_passed))
 }
-

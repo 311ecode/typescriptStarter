@@ -41,7 +41,7 @@ testNewTspFrontend_testCase1() {
     cd "$project_dir"
 
     if testNewTspFrontend_testCase1_check_scripts "$package_json" &&
-       testNewTspFrontend_testCase1_check_puppeteer; then
+      testNewTspFrontend_testCase1_check_puppeteer; then
       echo "🎤 Scripts and Puppeteer are droppin' the mic! ✅"
       testNewTspFrontend_testCase1_check_main_absence "$package_json"
     else

@@ -1,8 +1,8 @@
 #!/bin/bash
 newTsp_setup_frontend_create_configs() {
   echo "Creating configuration files..."
-  
-  cat > tsconfig.json << EOF
+
+  cat >tsconfig.json <<EOF
 {
   "compilerOptions": {
     "target": "ESNext",
@@ -25,6 +25,4 @@ newTsp_setup_frontend_create_configs() {
 }
 EOF
 
-
 }
-

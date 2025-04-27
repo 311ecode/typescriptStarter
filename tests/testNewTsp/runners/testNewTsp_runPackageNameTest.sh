@@ -6,7 +6,6 @@ testNewTsp_runPackageNameTest() {
   testNewTspPackageName
   local result=$?
   echo "---------------------------------------------"
-  
+
   return $result
 }
-

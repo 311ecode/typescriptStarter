@@ -6,7 +6,6 @@ testNewTsp_runNodeTest() {
   testNewTspNode
   local result=$?
   echo "---------------------------------------------"
-  
+
   return $result
 }
-

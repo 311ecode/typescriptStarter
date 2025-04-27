@@ -1,12 +1,12 @@
 #!/bin/bash
 newTsp_setup_frontend_create_tests() {
   echo "Creating test files..."
-  
+
   # Ensure the test directories exist first
   mkdir -p test/frontend
   mkdir -p test/e2e
-  
-  cat <<EOF > test/frontend/Counter.test.js
+
+  cat <<EOF >test/frontend/Counter.test.js
 import { register } from 'node-css-require';
 register();
 
@@ -48,7 +48,7 @@ test("Counter", async (t) => {
 });
 EOF
 
-  cat <<EOF > test/e2e/setup.js
+  cat <<EOF >test/e2e/setup.js
 import puppeteer from 'puppeteer';
 import handler from 'serve-handler';
 import http from 'http';
@@ -137,7 +137,7 @@ export async function teardown() {
 }
 EOF
 
-  cat <<EOF > test/e2e/app.e2e.test.js
+  cat <<EOF >test/e2e/app.e2e.test.js
 import { test } from "node:test";
 import assert from "node:assert";
 import setup, { teardown } from "./setup.js";
