@@ -1,5 +1,6 @@
 #!/bin/bash
 newTsp() {
+  eval "$(markdown-show-help-registration -m 1)"
   local newTsp_project_name=""
   local newTsp_typezero="false"
   local newTsp_node="false"
@@ -42,6 +43,8 @@ newTsp() {
   if [ "$newTsp_help" = "true" ]; then
     # Call the detailed help function instead of just showing usage
     newTsp_help
+    eval "$(markdown-show-help-registration -m 1)"
+
     return 0 # Use return instead of exit when in a function
   fi
 
@@ -93,3 +96,5 @@ newTsp() {
   # Return to initial directory
   cd "$initial_dir" || echo "Warning: Could not return to initial directory"
 }
+
+registerToFunctionsDB
