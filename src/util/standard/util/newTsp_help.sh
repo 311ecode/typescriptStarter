@@ -1,4 +1,5 @@
 #!/bin/bash
+# Copyright © 2025 Imre Toth <tothimre@gmail.com> - Proprietary Software. See LICENSE file for terms.
 newTsp_help() {
   # Define color codes
   local RED='\033[0;31m'

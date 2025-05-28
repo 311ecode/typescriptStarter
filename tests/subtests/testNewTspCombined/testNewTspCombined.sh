@@ -1,4 +1,5 @@
 #!/bin/bash
+# Copyright © 2025 Imre Toth <tothimre@gmail.com> - Proprietary Software. See LICENSE file for terms.
 testNewTspCombined() {
   local setup_result=$(testNewTspCombined_setup)
   local initial_dir=$(echo $setup_result | cut -d ':' -f 1)

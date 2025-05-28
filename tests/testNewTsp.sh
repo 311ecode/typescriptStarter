@@ -1,4 +1,5 @@
 #!/bin/bash
+# Copyright © 2025 Imre Toth <tothimre@gmail.com> - Proprietary Software. See LICENSE file for terms.
 testNewTsp() {
   # Initialize test environment and get initial directory
   local initial_dir=$(testNewTsp_initialize)

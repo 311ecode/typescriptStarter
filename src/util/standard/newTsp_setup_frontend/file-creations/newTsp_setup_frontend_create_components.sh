@@ -1,4 +1,5 @@
 #!/bin/bash
+# Copyright © 2025 Imre Toth <tothimre@gmail.com> - Proprietary Software. See LICENSE file for terms.
 newTsp_setup_frontend_create_components() {
   echo "Creating frontend components..."
   cat <<EOF >src/frontend/components/Counter.ts

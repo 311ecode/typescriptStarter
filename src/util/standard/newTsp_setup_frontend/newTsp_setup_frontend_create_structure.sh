@@ -1,4 +1,5 @@
 #!/bin/bash
+# Copyright © 2025 Imre Toth <tothimre@gmail.com> - Proprietary Software. See LICENSE file for terms.
 newTsp_setup_frontend_create_structure() {
   echo "Creating frontend directory structure..."
   mkdir -p src/frontend src/frontend/components public test/frontend test/e2e scripts

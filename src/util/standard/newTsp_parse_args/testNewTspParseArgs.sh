@@ -1,4 +1,5 @@
 #!/bin/bash
+# Copyright © 2025 Imre Toth <tothimre@gmail.com> - Proprietary Software. See LICENSE file for terms.
 testNewTspParseArgs() {
   local initial_dir=$(pwd)
   trap 'cd "$initial_dir"' EXIT

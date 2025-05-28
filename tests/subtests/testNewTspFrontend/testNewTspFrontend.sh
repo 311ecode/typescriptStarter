@@ -1,4 +1,5 @@
 #!/bin/bash
+# Copyright © 2025 Imre Toth <tothimre@gmail.com> - Proprietary Software. See LICENSE file for terms.
 testNewTspFrontend() {
   local setup_result=$(testNewTspFrontend_setup)
   local initial_dir=$(echo $setup_result | cut -d ':' -f 1)

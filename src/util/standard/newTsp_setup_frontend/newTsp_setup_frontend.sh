@@ -1,3 +1,4 @@
+# Copyright © 2025 Imre Toth <tothimre@gmail.com> - Proprietary Software. See LICENSE file for terms.
 newTsp_setup_frontend() {
   echo "Setting up frontend..."
   # Skip common dependency installation since it's already done

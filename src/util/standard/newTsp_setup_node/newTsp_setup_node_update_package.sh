@@ -1,4 +1,5 @@
 #!/bin/bash
+# Copyright © 2025 Imre Toth <tothimre@gmail.com> - Proprietary Software. See LICENSE file for terms.
 
 newTsp_setup_node_update_package() {
   echo "Updating package.json for Node.js tests..."

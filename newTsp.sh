@@ -1,4 +1,5 @@
 #!/bin/bash
+# Copyright © 2025 Imre Toth <tothimre@gmail.com> - Proprietary Software. See LICENSE file for terms.
 newTsp() {
   eval "$(markdown-show-help-registration -m 1)"
   local newTsp_project_name=""
