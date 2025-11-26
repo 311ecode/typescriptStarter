@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Copyright © 2025 Imre Toth <tothimre@gmail.com> - Proprietary Software. See LICENSE file for terms.
 newTsp() {
-  eval "$(markdown-show-help-registration -m 1)"
+  command -v markdown-show-help-registration &>/dev/null && eval "$(markdown-show-help-registration -m 1)"
   local newTsp_project_name=""
   local newTsp_typezero="false"
   local newTsp_node="false"
@@ -44,7 +44,7 @@ newTsp() {
   if [ "$newTsp_help" = "true" ]; then
     # Call the detailed help function instead of just showing usage
     newTsp_help
-    eval "$(markdown-show-help-registration -m 1)"
+    command -v markdown-show-help-registration &>/dev/null && eval "$(markdown-show-help-registration -m 1)"
 
     return 0 # Use return instead of exit when in a function
   fi
