@@ -17,7 +17,7 @@ transform_to_node23_ts() {
         if [[ "$file" != *"/node_modules/"* ]] && [[ "$file" != "./node_modules/"* ]]; then
             new_name="${file%.js}.ts"
             echo "  Renaming: $file -> $new_name"
-            mv "$file" "$new_name" 2>/dev/null
+            \mv "$file" "$new_name" 2>/dev/null
         fi
     done
 
@@ -202,7 +202,7 @@ transform_to_node23_ts() {
         if [[ "$file" != *"/node_modules/"* ]] && [[ "$file" != "./node_modules/"* ]]; then
             new_name="${file%.js}.ts"
             echo "  Renaming: $file -> $new_name"
-            mv "$file" "$new_name" 2>/dev/null
+            \mv "$file" "$new_name" 2>/dev/null
         fi
     done
 

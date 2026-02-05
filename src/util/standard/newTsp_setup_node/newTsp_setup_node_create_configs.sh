@@ -7,7 +7,7 @@ newTsp_setup_node_create_configs() {
     --strict false --declaration
 
   if [ -f "tsconfig.json" ]; then
-    mv tsconfig.json tsconfig.node.json
+    \mv tsconfig.json tsconfig.node.json
   else
     echo "Error: tsconfig.json was not created by tsc --init. Aborting."
     exit 1

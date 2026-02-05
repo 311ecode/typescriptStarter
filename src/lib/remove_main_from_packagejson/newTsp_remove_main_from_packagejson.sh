@@ -26,7 +26,7 @@ newTsp_remove_main_from_packagejson() {
     fi
 
     # Replace the original file with the modified version
-    mv "$temp_file" "$package_json_path"
+    \mv "$temp_file" "$package_json_path"
 
     echo "Successfully removed 'main' key from '$package_json_path'."
     return 0

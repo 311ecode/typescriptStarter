@@ -42,7 +42,7 @@ newTsp_init_npm() {
 
       jq --arg name "$sanitized_name" '.name = $name | .type = "module" | del(.scripts.test)' package.json >temp.json
       if [ -f "temp.json" ]; then
-        mv temp.json package.json
+        \mv temp.json package.json
       else
         echo "ERROR: Failed to create temp.json when updating package.json"
       fi
