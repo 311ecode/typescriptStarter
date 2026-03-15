@@ -98,4 +98,4 @@ newTsp() {
   cd "$initial_dir" || echo "Warning: Could not return to initial directory"
 }
 
-registerToFunctionsDB
+# registerToFunctionsDB
